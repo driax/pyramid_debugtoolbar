@@ -10,6 +10,11 @@ from pyramid_debugtoolbar.utils import EXC_ROUTE_NAME
 from pyramid_debugtoolbar.toolbar import toolbar_tween_factory # API
 toolbar_tween_factory = toolbar_tween_factory # pyflakes
 
+def as_list_or_false(data):
+    if data.lower() in ('false', 'no', 'disable'):
+        return False
+    return as_list(data)
+
 default_panel_names = (
     'pyramid_debugtoolbar.panels.versions.VersionDebugPanel',
     'pyramid_debugtoolbar.panels.settings.SettingsDebugPanel',
@@ -29,7 +34,7 @@ default_settings = (
     ('intercept_exc', as_display_debug_or_false, 'debug'),
     ('intercept_redirects', asbool, 'false'),
     ('panels', as_globals_list, default_panel_names),
-    ('hosts', as_list, default_hosts),
+    ('hosts', as_list_or_false, default_hosts),
     )
 
 def parse_settings(settings):

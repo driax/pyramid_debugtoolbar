@@ -92,7 +92,8 @@ def toolbar_tween_factory(handler, registry):
         request.exc_history = exc_history
         remote_addr = request.remote_addr
 
-        if (request.path.startswith(root_path) or (not remote_addr in hosts)):
+        if (request.path.startswith(root_path) or \
+                (not hosts is False and (not remote_addr in hosts))):
             return handler(request)
 
         toolbar = DebugToolbar(request, panel_classes)
